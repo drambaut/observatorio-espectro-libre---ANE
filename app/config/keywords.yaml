@@ -1,0 +1,30 @@
+keywords:
+  - keyword_original: "unlicensed spectrum"
+    keyword_en: "unlicensed spectrum"
+    keyword_es: "bandas de uso libre"
+    keyword_pt: "espectro não licenciado"
+    keyword_ko: "비면허 스펙트럼"
+    keyword_nl: "vergunningvrij spectrum"
+    keyword_no: "lisensfritt frekvensbånd"
+    keyword_ar: "الطيف غير المرخص"
+    is_active: true
+
+  - keyword_original: "license-exempt"
+    keyword_en: "license-exempt"
+    keyword_es: "uso libre"
+    keyword_pt: "isento de licença"
+    keyword_ko: "면허 면제"
+    keyword_nl: "vergunningvrij"
+    keyword_no: "lisensfritt"
+    keyword_ar: "معفى من الترخيص"
+    is_active: true
+
+  - keyword_original: "licence-exempt"
+    keyword_en: "licence-exempt"
+    keyword_es: "exento de licencia"
+    keyword_pt: "isento de licença"
+    keyword_ko: "면허 면제"
+    keyword_nl: "vergunningvrij"
+    keyword_no: "lisensfritt"
+    keyword_ar: "معفى من الترخيص"
+    is_active: true

@@ -1,0 +1,964 @@
+﻿regulators:
+  - short_name: itu
+    name: "Union Internacional de Telecomunicaciones (UIT/ITU)"
+    country: "Internacional"
+    region: "Internacional"
+    language: "en"
+    url_base: "https://www.itu.int/"
+    url_news: "https://www.itu.int/hub/news/"
+    url_rss: "https://www.itu.int/hub/feed/"
+    url_search: "https://www.itu.int/es/Pages/default.aspx#/es"
+    search_method: "form"
+    requires_playwright: true
+
+    selectors:
+      search_box: "input#gsc-i-id1"
+      search_button: "button.gsc-search-button"
+      result_container: ".gsc-webResult.gsc-result"
+      result_link: "a.gs-title"
+      result_title: ".gs-title"
+      result_summary: ".gs-snippet"
+      result_date: null
+
+    allowed_url_contains:
+      - "itu.int"
+
+    blocked_url_contains:
+      - "facebook.com"
+      - "twitter.com"
+      - "linkedin.com"
+      - "youtube.com"
+      - "/contact"
+      - "/privacy"
+      - "/accessibility"
+      - "itu-wp-sso"
+
+    blocked_title_contains:
+      - "Cookie"
+      - "Subscribe"
+      - "Newsletter"
+      - "Login"
+      - "Sign in"
+      - "Privacy"
+      - "404"
+      - "Sorry"
+
+    min_title_length: 10
+    priority: 1
+    is_active: true
+
+  - short_name: rsm
+    name: "Radio Spectrum Management (RSM)"
+    country: "Nueva Zelanda"
+    region: "Region 3"
+    language: "en"
+    url_base: "https://www.rsm.govt.nz/"
+    url_news: "https://www.rsm.govt.nz/about/news-and-updates"
+    url_rss: null
+    url_search: "https://www.rsm.govt.nz/search?keyword={query}"
+    search_method: "url"
+    requires_playwright: true
+
+    selectors:
+      result_container: "main a[href]"
+      result_link: "a[href]"
+      result_title: "a"
+      result_summary: null
+      result_date: null
+
+    allowed_url_contains:
+      - "rsm.govt.nz"
+      - "/assets/Uploads"
+
+    blocked_url_contains:
+      - "rrf.rsm.govt.nz"
+      - "facebook.com"
+      - "twitter.com"
+      - "linkedin.com"
+      - "youtube.com"
+      - "/contact-us"
+      - "/feedback-enquiry"
+      - "/report-non-compliance"
+      - "/about/our-team"
+      - "#"
+
+    blocked_title_contains:
+      - "Cookie"
+      - "Contact us"
+      - "Feedback"
+      - "Register of Radio Frequencies"
+      - "Skip to"
+      - "Toggle"
+      - "Back"
+      - "Close"
+      - "Menu"
+
+    min_title_length: 12
+    priority: 1
+    is_active: true
+
+
+  - short_name: acma
+    name: "Australian Communications and Media Authority (ACMA)"
+    country: "Australia"
+    region: "Región 3"
+    language: "en"
+    url_base: "https://www.acma.gov.au/"
+    url_news: "https://www.acma.gov.au/news-and-publications"
+    url_rss: null
+
+    url_search: "https://www.acma.gov.au/search?search_api_fulltext={query}"
+    search_method: "url"
+    requires_playwright: true
+
+    selectors:
+      result_container: "main article, main .views-row, main .search-result, main .card, main li"
+      result_link: "a[href]"
+      result_title: "h2, h3, h2 a, h3 a, a"
+      result_summary: "p, .summary, .search-result__snippet, .card__content"
+      result_date: "time"
+
+    allowed_url_contains:
+      - "acma.gov.au/articles/"
+      - "acma.gov.au/consultations/"
+      - "acma.gov.au/publications/"
+      - "acma.gov.au/research-and-analysis/"
+      - "acma.gov.au/spectrum"
+      - "acma.gov.au/radiocommunications"
+      - "acma.gov.au/licences"
+
+    blocked_url_contains:
+      - "facebook.com"
+      - "twitter.com"
+      - "x.com"
+      - "linkedin.com"
+      - "youtube.com"
+      - "instagram.com"
+      - "esafety.gov.au"
+      - "/subscribe"
+      - "/contact"
+      - "/careers"
+      - "/about-acma"
+      - "/blocked-gambling"
+      - "/gambling"
+      - "/spam"
+      - "/scam"
+      - "/telemarketing"
+      - "#"
+
+    blocked_title_contains:
+      - "Cookie"
+      - "Skip to main content"
+      - "Back to top"
+      - "ONLINE ENQUIRY"
+      - "Subscribe"
+      - "404"
+      - "Page not found"
+      - "Make a payment"
+      - "Log in to ACMA Assist"
+      - "gambling"
+      - "blocked gambling"
+      - "online gambling"
+      - "spam"
+      - "scam"
+      - "telemarketing"
+      - "broadcasting"
+      - "media ownership"
+
+    min_title_length: 12
+    priority: 3
+    is_active: true
+
+  - short_name: fcc
+    name: "Federal Communications Commission (FCC)"
+    country: "Estados Unidos"
+    region: "Region 2"
+    language: "en"
+
+    url_base: "https://www.fcc.gov/"
+    url_news: "https://www.fcc.gov/news-events"
+    url_rss: "https://www.fcc.gov/news-events/rss-feeds-and-email-updates-fcc"
+    url_search: "https://www.fcc.gov/search/#q={query}"
+
+    search_method: "url"
+    requires_playwright: true
+
+    selectors:
+      result_container: ".searchresult"
+      result_link: "a[href]"
+      result_title: "a[href]"
+      result_summary: "p"
+      result_date: "time, em, .date, [class*='date']"
+
+    allowed_url_contains:
+      - "fcc.gov"
+
+    blocked_url_contains:
+      - "facebook.com"
+      - "twitter.com"
+      - "x.com"
+      - "linkedin.com"
+      - "youtube.com"
+      - "fcc.gov/consumers"
+      - "fcc.gov/careers"
+      - "fcc.gov/about-fcc"
+      - "apps.fcc.gov"
+      - "wireless2.fcc.gov"
+      - "publicfiles.fcc.gov"
+      - "/search/"
+
+    blocked_title_contains:
+      - "Cookie"
+      - "Skip to"
+      - "Sign in"
+      - "FCC ID Search"
+      - "License Search"
+      - "Clear All Filters"
+      - "Topics/Tags"
+      - "Authors"
+      - "Taxonomies"
+      - "Document Types"
+      - "Released Dates"
+      - "Last Changed"
+      - "Best Match"
+      - "Page not found"
+      - "404"
+
+    min_title_length: 12
+    priority: 1
+    is_active: true
+      
+
+  - short_name: imda
+    name: "Infocomm Media Development Authority (IMDA) - Singapore"
+    country: "Singapur"
+    region: "Región 3"
+    language: "en"
+
+    url_base: "https://www.imda.gov.sg"
+    url_news: "https://www.imda.gov.sg/resources/press-releases-factsheets-and-speeches"
+    url_rss: null
+    url_search: "https://www.imda.gov.sg/resources/press-releases-factsheets-and-speeches"
+
+    listing_urls:
+      - "https://www.imda.gov.sg/resources/press-releases-factsheets-and-speeches"
+      - "https://www.imda.gov.sg/regulations-and-licences"
+      - "https://www.imda.gov.sg/regulations-and-licensing-listing"
+
+    search_method: "listing"
+    requires_playwright: true
+
+    selectors:
+      result_container: "main a[href*='/resources/press-releases-factsheets-and-speeches/'], main a[href*='/regulations-and-licences/'], main a[href*='/regulations-and-licensing-listing/'], main a[href*='/-/media/']"
+      result_link: "__self__"
+      result_title: "__self__"
+      result_summary: null
+      result_date: null
+
+    allowed_url_contains:
+      - "imda.gov.sg/resources/press-releases-factsheets-and-speeches"
+      - "imda.gov.sg/regulations-and-licences"
+      - "imda.gov.sg/regulations-and-licensing-listing"
+      - "imda.gov.sg/-/media"
+
+    blocked_url_contains:
+      - "facebook.com"
+      - "linkedin.com"
+      - "youtube.com"
+      - "instagram.com"
+      - "search.gov.sg"
+      - "iris.imda.gov.sg"
+      - "form.gov.sg"
+      - "go.gov.sg"
+      - "tech.gov.sg"
+      - "reach.gov.sg"
+      - "gobusiness.gov.sg"
+      - "/careers-at-imda"
+      - "/contact-us"
+      - "/faq"
+      - "/resources/blog"
+      - "/how-we-can-help"
+      - "/sitemap"
+      - "#"
+
+    blocked_title_contains:
+      - "Cookie"
+      - "Skip to main content"
+      - "Back to top"
+      - "Toggle"
+      - "Select a profile"
+      - "Loading"
+      - "Subscribe"
+      - "Report Vulnerability"
+      - "404"
+      - "Powered by GovTech"
+      - "Search"
+
+    min_title_length: 12
+    priority: 4
+    is_active: true
+
+  - short_name: cept
+    name: "European Conference of Postal and Telecommunications Administrations (CEPT)"
+    country: "Europa"
+    region: "Región 1"
+    language: "en"
+
+    url_base: "https://www.cept.org"
+    url_news: "https://www.cept.org/cept"
+    url_rss: null
+    url_search: "https://www.cept.org/cept"
+
+    search_method: "listing"
+    requires_playwright: true
+
+    listing_urls:
+      - "https://www.cept.org/cept"
+      - "https://www.cept.org/ecc"
+      - "https://www.cept.org/eco"
+
+    selectors:
+      result_container: "main a[href], a[href*='/cept/news/'], a[href*='/ecc/news/'], a[href*='/eco/news/'], a[href*='/news/']"
+      result_link: "__self__"
+      result_title: "__self__"
+      result_summary: null
+      result_date: null
+
+    allowed_url_contains:
+      - "cept.org/cept/news"
+      - "cept.org/ecc/news"
+      - "cept.org/eco/news"
+      - "cept.org/news"
+
+    blocked_url_contains:
+      - "facebook.com"
+      - "linkedin.com"
+      - "twitter.com"
+      - "x.com"
+      - "/login"
+      - "#"
+      - "wiki.cept.org"
+
+    blocked_title_contains:
+      - "Login"
+      - "Search"
+      - "Home"
+      - "Info"
+      - "Groups"
+      - "Deliverables"
+      - "Tools & Services"
+      - "CEPT Meeting Documents"
+      - "CEPT Meeting Calendar"
+      - "ECC"
+      - "ECO"
+      - "CEPT"
+
+    min_title_length: 12
+    priority: 2
+    is_active: true
+
+
+  - short_name: arcep
+    name: "Autorité de Régulation des Communications Électroniques, des Postes et de la Distribution de la Presse (ARCEP)"
+    country: "Francia"
+    region: "Europa"
+    language: "en"
+
+    url_base: "https://en.arcep.fr/"
+    url_news: "https://en.arcep.fr/news.html"
+    url_rss: "https://en.arcep.fr/news/follow-regulatory-news/press-releases/rss.xml"
+    url_search: "https://en.arcep.fr/search.html?tx_solr%5Bq%5D={query}&tx_solr%5BresultsPerPage%5D=100"
+
+    search_method: "url"
+    requires_playwright: false
+
+    selectors:
+      result_container: "#items-list .search-result"
+      result_link: "a[href]"
+      result_title: "h2, h3, h4, a"
+      result_summary: "p"
+      result_date: "time, .date, [class*='date']"
+
+    allowed_url_contains:
+      - "en.arcep.fr/news/"
+      - "en.arcep.fr/publications/"
+      - "en.arcep.fr/uploads/"
+      - "arcep.fr/uploads/"
+
+    blocked_url_contains:
+      - "/search.html"
+      - "tx_solr"
+      - "resultsPerPage"
+      - "sort="
+      - "filter="
+      - "#tab"
+      - "mailto:"
+      - "/access-map"
+      - "/arcep/"
+      - "/maps-data"
+      - "/contact"
+      - "/legal-mentions"
+      - "/personal-data"
+      - "linkedin.com"
+      - "facebook.com"
+      - "twitter.com"
+      - "x.com"
+      - "youtube.com"
+      - "dailymotion.com"
+      - "instagram.com"
+      - "bsky.app"
+      - "mastodon"
+      - "#"
+
+    blocked_title_contains:
+      - "Home"
+      - "Search"
+      - "Search results"
+      - "Linkedin"
+      - "Instagram"
+      - "Bluesky"
+      - "Mastodon"
+      - "Menu"
+      - "Join us"
+      - "Cookie"
+      - "Subscribe"
+      - "Login"
+      - "Sign in"
+      - "Privacy"
+      - "404"
+      - "Sorry"
+
+    min_title_length: 10
+    priority: 2
+    is_active: true
+
+
+  - short_name: traficom
+    name: "Finnish Transport and Communications Agency (Traficom)"
+    country: "Finlandia"
+    region: "Europa"
+    language: "en"
+
+    url_base: "https://www.traficom.fi"
+    url_news: "https://www.traficom.fi/en/news"
+    url_rss: null
+    url_search: "https://www.traficom.fi/en/news?topicSet=5&ctype=news&q={query}"
+
+    search_method: "url"
+    requires_playwright: true
+
+    selectors:
+      result_container: "main a[href*='/en/news/'], main a[href*='/en/news-and-notices/'], article a[href], .view-content a[href], .card a[href]"
+      result_link: "__self__"
+      result_title: "__self__"
+      result_summary: null
+      result_date: "time, [class*='date'], [class*='Date']"
+
+    allowed_url_contains:
+      - "traficom.fi/en/news"
+      - "traficom.fi/en/news-and-notices"
+      - "traficom.fi/en/communications"
+      - "traficom.fi/en/telecommunications"
+
+    blocked_url_contains:
+      - "facebook.com"
+      - "twitter.com"
+      - "x.com"
+      - "linkedin.com"
+      - "youtube.com"
+      - "/contact"
+      - "/privacy"
+      - "/cookies"
+      - "/search"
+      - "/haku"
+      - "#"
+
+    blocked_title_contains:
+      - "Cookie"
+      - "Subscribe"
+      - "Newsletter"
+      - "Login"
+      - "Sign in"
+      - "Privacy"
+      - "404"
+      - "Sorry"
+      - "Search"
+      - "Show filters"
+      - "Front page"
+
+    min_title_length: 10
+    priority: 3
+    is_active: true
+
+  - short_name: comreg
+    name: "Commission for Communications Regulation (ComReg)"
+    country: "Irlanda"
+    region: "Europa"
+    language: "en"
+
+    url_base: "https://www.comreg.ie"
+    url_news: "https://www.comreg.ie/news"
+    url_rss: "https://www.comreg.ie/feed/"
+    url_search: "https://www.comreg.ie/search-results?q={query}"
+
+    search_method: "url"
+    requires_playwright: false
+
+    selectors:
+      search_box: null
+      search_button: null
+      result_container: "#ajax-posts article, #ajax-posts .ajax-posts, .News_Block, .search-results article, main article"
+      result_link: "a[href]"
+      result_title: "h2, h3, a[href]"
+      result_summary: "p"
+      result_date: "time, .date, [class*='date'], div.News_Block_content_inn_date span"
+
+    allowed_url_contains:
+      - "comreg.ie/publication"
+      - "comreg.ie/news"
+      - "comreg.ie/industry"
+      - "comreg.ie/publications"
+
+    blocked_url_contains:
+      - "facebook.com"
+      - "twitter.com"
+      - "x.com"
+      - "linkedin.com"
+      - "youtube.com"
+      - "/contact"
+      - "/privacy"
+      - "/cookies"
+      - "/search-results"
+      - "#"
+
+    blocked_title_contains:
+      - "Cookie"
+      - "Subscribe"
+      - "Newsletter"
+      - "Login"
+      - "Sign in"
+      - "Privacy"
+      - "404"
+      - "Sorry"
+      - "We couldn't find any results"
+
+    min_title_length: 10
+    priority: 3
+    is_active: true
+
+  - short_name: rdi_nl
+    name: "Rijksinspectie Digitale Infrastructuur (RDI)"
+    country: "Países Bajos"
+    region: "Europa"
+    language: "nl"
+
+    url_base: "https://www.rdi.nl"
+    url_news: "https://www.rdi.nl/actueel/nieuws"
+    url_rss: "https://www.rdi.nl/service/rss"
+    url_search: "https://www.rdi.nl/zoeken?q={query}"
+
+    search_method: "url"
+    requires_playwright: true
+
+    selectors:
+      search_box: "input.text-input.search-box__input, input[name='q'], input[type='search']"
+      search_button: "button.search-box__submit-button, button[type='submit']"
+
+      result_container: "ul.links-list li.links-list__item, li.links-list__item, .results a[href], main a[href]"
+      result_link: "a[href]"
+      result_title: "h2, h3, a[href], .link-plus__title"
+      result_summary: "p, .link-plus__text"
+      result_date: "time, .meta-data span:last-child, [class*='date'], [class*='datum']"
+
+    allowed_url_contains:
+      - "rdi.nl"
+      - "rdi.nl/onderwerpen"
+      - "rdi.nl/actueel"
+      - "rdi.nl/documenten"
+      - "rdi.nl/publicaties"
+
+    blocked_url_contains:
+      - "facebook.com"
+      - "twitter.com"
+      - "x.com"
+      - "linkedin.com"
+      - "youtube.com"
+      - "/contact"
+      - "/privacy"
+      - "/cookies"
+      - "/zoeken"
+      - "#"
+
+    blocked_title_contains:
+      - "Cookie"
+      - "Abonneren"
+      - "Nieuwsbrief"
+      - "Inloggen"
+      - "Privacy"
+      - "404"
+      - "Toon Filters"
+      - "Home"
+
+    min_title_length: 10
+    priority: 3
+    is_active: true
+
+  - short_name: ursec
+    name: "Unidad Reguladora de Servicios de Comunicaciones (URSEC)"
+    country: "Uruguay"
+    region: "América Latina"
+    language: "es"
+
+    url_base: "https://www.gub.uy/unidad-reguladora-servicios-comunicaciones"
+    url_news: "https://www.gub.uy/unidad-reguladora-servicios-comunicaciones/comunicacion/noticias"
+    url_rss: null
+    url_search: "https://www.gub.uy/unidad-reguladora-servicios-comunicaciones/buscar?search_api_fulltext={query}&search-in-site=URSEC"
+
+    search_method: "url"
+    requires_playwright: false
+
+    selectors:
+      search_box: "input[name='search_api_fulltext']"
+      search_button: "button[type='submit']"
+
+      result_container: ".SearchResults-item, .search-result, main article, main .card, main a[href]"
+      result_link: "a[href]"
+      result_title: "h2, h3, a[href]"
+      result_summary: "p, .SearchResults-snippet, .summary"
+      result_date: "time, .date, [class*='fecha'], [class*='date']"
+      result_category: ".Media-subtitle, .SearchResults-type"
+
+    allowed_url_contains:
+      - "gub.uy/unidad-reguladora-servicios-comunicaciones"
+
+    blocked_url_contains:
+      - "facebook.com"
+      - "twitter.com"
+      - "x.com"
+      - "linkedin.com"
+      - "youtube.com"
+      - "/contacto"
+      - "/privacidad"
+      - "/accesibilidad"
+      - "/buscar"
+      - "#"
+
+    blocked_title_contains:
+      - "Cookie"
+      - "Suscribirse"
+      - "Newsletter"
+      - "Iniciar sesión"
+      - "Privacidad"
+      - "404"
+      - "Error"
+      - "Resultados de búsqueda"
+
+    min_title_length: 10
+    priority: 3
+    is_active: true
+
+  - short_name: tdra
+    name: "Telecommunications and Digital Government Regulatory Authority (TDRA)"
+    country: "Emiratos Árabes Unidos"
+    region: "Medio Oriente"
+    language: "ar"
+
+    url_base: "https://www.tdra.gov.ae"
+    url_news: "https://www.tdra.gov.ae/ar/media/press-release"
+    url_rss: null
+    url_search: "https://www.tdra.gov.ae/ar/search?langKey=ar&q={query}"
+
+    search_method: "url"
+    requires_playwright: true
+
+    selectors:
+      search_box: "input#txtSearch, input[type='search'], input[name='q']"
+      search_button: "button[type='submit']"
+
+      result_container: ".search-results a[href], .search-result a[href], .aegov-card.card-news, article, div[class*='search'] a[href]"
+      result_link: "a[href]"
+      result_title: "h2, h3, h4, h5, h6, a[href]"
+      result_summary: "p"
+      result_date: "time, [class*='date'], [class*='Date'], div.text-aeblack-600.text-sm.font-normal"
+
+    allowed_url_contains:
+      - "tdra.gov.ae/ar/media"
+      - "tdra.gov.ae/ar/Media"
+      - "tdra.gov.ae/ar/press"
+      - "tdra.gov.ae/ar/news"
+      - "tdra.gov.ae/ar/legislation"
+      - "tdra.gov.ae/ar/regulations"
+      - "tdra.gov.ae/ar/open-data"
+
+    blocked_url_contains:
+      - "facebook.com"
+      - "twitter.com"
+      - "x.com"
+      - "linkedin.com"
+      - "youtube.com"
+      - "/contact"
+      - "/privacy"
+      - "/accessibility"
+      - "/search"
+      - "/Services/"
+      - "/services/"
+      - "/ar/Services/"
+      - "/ar/services/"
+      - "/ar/about"
+      - "/ar/contact"
+      - "/ar/search"
+      - "/ar/digital-participation"
+      - "#"
+
+    blocked_title_contains:
+      - "Cookie"
+      - "Subscribe"
+      - "Newsletter"
+      - "Login"
+      - "Sign in"
+      - "Privacy"
+      - "404"
+      - "Sorry"
+      - "No results found"
+      - "Search results"
+      - "الرئيسة"
+
+    min_title_length: 6
+    priority: 3
+    is_active: true   
+
+#-------------------------------------------------
+
+
+#--------------------------------------------------------------------------------------------
+  - short_name: nkom
+    name: "Norwegian Communications Authority (Nkom)"
+    country: "Noruega"
+    region: "Europa"
+    language: "no"
+
+    url_base: "https://nkom.no"
+    url_news: "https://nkom.no/aktuelt"
+    url_rss: null
+    url_search: "https://nkom.no/sok?s={query}"
+
+    search_method: "url"
+    requires_playwright: true
+
+    selectors:
+      search_box: "input[name='s'], input[type='search']"
+      search_button: "button.navbar-search-form-submit, button[type='submit']"
+
+      result_container: "main a[href], ul.navigation-list li, li.py-4, article a[href], a[href*='/aktuelt/'], a[href*='/fagomrader/'], a[href*='/regelverk/']"
+      result_link: "__self__"
+      result_title: "__self__"
+      result_summary: null
+      result_date: "time, [class*='date'], [class*='dato'], span.text-smaller"
+
+    allowed_url_contains:
+      - "nkom.no/aktuelt"
+      - "nkom.no/fagomrader"
+      - "nkom.no/regelverk"
+      - "nkom.no/rapporter"
+      - "nkom.no/publikasjoner"
+
+    blocked_url_contains:
+      - "facebook.com"
+      - "twitter.com"
+      - "x.com"
+      - "linkedin.com"
+      - "youtube.com"
+      - "/kontakt"
+      - "/contact"
+      - "/personvern"
+      - "/privacy"
+      - "/sok"
+      - "#"
+
+    blocked_title_contains:
+      - "Cookie"
+      - "Abonner"
+      - "Nyhetsbrev"
+      - "Logg inn"
+      - "Personvern"
+      - "404"
+      - "Søkeresultat"
+      - "Forsiden"
+      - "Meny"
+
+    min_title_length: 10
+    priority: 3
+    is_active: false
+
+  - short_name: ised
+    name: "Innovation, Science and Economic Development Canada (ISED)"
+    country: "Canadá"
+    region: "Región 2"
+    language: "en"
+    url_base: "https://ised-isde.canada.ca/"
+    url_news: "https://ised-isde.canada.ca/site/spectrum-management-telecommunications/en/learn-more/key-documents/published-documents"
+    url_rss: "https://api.io.canada.ca/io-server/gc/news/en/v2?dept=departmentofindustry&sort=publishedDate&orderBy=desc&pick=100&format=atom"
+    url_search: "https://www.canada.ca/en/sr/srb.html#q={query}"
+    search_method: "blocked"
+    requires_playwright: false
+
+    selectors:
+      result_container: null
+      result_link: null
+      result_title: null
+      result_summary: null
+      result_date: null
+
+    allowed_url_contains:
+      - "ised-isde.canada.ca"
+      - "canada.ca/en/innovation-science-economic-development"
+
+    blocked_url_contains:
+      - "facebook.com"
+      - "twitter.com"
+      - "x.com"
+      - "linkedin.com"
+      - "youtube.com"
+      - "instagram.com"
+      - "/fr/"
+      - "/fr"
+      - "#"
+
+    blocked_title_contains:
+      - "Cookie"
+      - "Skip to"
+      - "Language selection"
+      - "Gouvernement du Canada"
+      - "Français"
+      - "Report a problem"
+      - "Top of Page"
+      - "404"
+
+    min_title_length: 12
+    priority: 3
+    is_active: false
+
+  - short_name: ofcom
+    name: "Ofcom - Oficina de Comunicaciones (Reino Unido)"
+    country: "Reino Unido"
+    region: "RegiÃ³n 1"
+    language: "en"
+    url_base: "https://www.ofcom.org.uk/"
+    url_news: "https://www.ofcom.org.uk/news-and-updates"
+    url_rss: null 
+    url_search: "https://www.ofcom.org.uk/search-results?query={query}"
+    search_method: "url"
+    requires_playwright: false
+
+
+    selectors:
+      result_container: "article, .news-card, main .list-item" 
+      result_link: "a[href*='/spectrum/'], a[href*='/news-and-updates/'], a[href*='/consultations-and-statements/']"  
+      result_title: "h2 a, h3 a, .card-title a"  
+      result_summary: "p.summary, .card-description, .teaser" 
+      result_date: "time, .date, span[class*='date']"  
+
+    allowed_url_contains:
+      - "ofcom.org.uk/spectrum"
+      - "ofcom.org.uk/news-and-updates"
+      - "ofcom.org.uk/consultations-and-statements"
+      - "ofcom.org.uk/information-for-industry"
+      - "ofcom.org.uk/research-statistics-and-data"
+
+    blocked_url_contains:
+      - "x.com"
+      - "facebook.com"
+      - "linkedin.com"
+      - "youtube.com"
+      - "instagram.com"
+      - "tiktok.com"
+      - "checker.ofcom.org.uk"        
+      - "consumers.ofcom.org.uk"      
+      - "/make-a-complaint"
+      - "/advice-for-consumers"
+      - "/phones-and-broadband/saving-money"
+      - "/about-ofcom/website"
+      - "/cy/"                        
+      - "#"
+
+    blocked_title_contains:
+      - "Cookie"
+      - "Skip to"
+      - "Go Back"
+      - "hamburger menu"
+      - "Quick links"
+      - "Broadband and mobile coverage checker"
+      - "Social tariffs"
+      - "Telephone area codes"
+      - "404"
+      - "Complaint"
+
+    min_title_length: 12
+    priority: 2
+    is_active: false
+
+
+  - short_name: gov_il
+    name: "Israel Ministry of Communications (MOC)"
+    country: "Israel"
+    region: "Medio Oriente"
+    language: "en"
+
+    url_base: "https://www.gov.il"
+    url_news: "https://www.gov.il/en/departments/ministry_of_communications"
+    url_rss: null
+
+    url_search: "https://www.gov.il/en/Search"
+    search_method: "form"
+    requires_playwright: true
+
+    selectors:
+      search_box: "input[id='query'], input[name='query'], input[type='search']"
+      search_button: "button[type='submit'], button[aria-label*='Search'], .search-button"
+
+      result_container: ".card, [class*='result'], [class*='Result']"
+      result_link: "a[href]"
+      result_title: "h2, h3, h4, a[href], strong, [class*='title'], [class*='Title']"
+      result_summary: "p, [class*='description'], [class*='Description'], [class*='summary'], [class*='Summary']"
+      result_date: "time, [class*='date'], [class*='Date']"
+
+    allowed_url_contains:
+      - "gov.il/en/pages"
+      - "gov.il/en/departments"
+      - "gov.il/en/service"
+      - "gov.il/en/publications"
+
+    blocked_url_contains:
+      - "facebook.com"
+      - "twitter.com"
+      - "x.com"
+      - "linkedin.com"
+      - "youtube.com"
+      - "/contact"
+      - "/privacy"
+      - "/accessibility"
+      - "/search"
+      - "#"
+      - "/pages/gov_terms_of_use"
+      - "/departments/govil-landing-page"
+
+    blocked_title_contains:
+      - "Cookie"
+      - "Subscribe"
+      - "Newsletter"
+      - "Login"
+      - "Sign in"
+      - "Privacy"
+      - "404"
+      - "Sorry"
+      - "Accessibility"
+      - "My Gov"
+      - "Government AI Assistant"
+      - "Select a government"
+      - "Files"
+      - "Units"
+
+    min_title_length: 10
+    priority: 3
+    is_active: false
+    notes: "El portal gov.il muestra resultados manualmente, pero en automatizacion Playwright/Form es bloqueado por verificacion/Cloudflare. Se excluye del MVP."
