@@ -8,7 +8,7 @@ sys.path.append(str(ROOT_DIR))
 from app.db.session import SessionLocal
 from app.services.search_service import SearchService
 
-DEFAULT_REGULATORS = {"ofcom", "rsm", "acma"}
+DEFAULT_REGULATORS = {"comreg", "rsm", "acma"}
 DEFAULT_MAX_RESULTS_PER_QUERY = 10
 DEFAULT_TIMEOUT_SECONDS = 30
 
@@ -32,7 +32,7 @@ def parse_args() -> argparse.Namespace:
         "--regulators",
         nargs="+",
         default=sorted(DEFAULT_REGULATORS),
-        help="Lista de short_name separada por espacios o comas. Por defecto: ofcom rsm acma.",
+        help="Lista de short_name separada por espacios o comas. Por defecto: comreg rsm acma.",
     )
     parser.add_argument(
         "--keywords",

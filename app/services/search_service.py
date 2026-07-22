@@ -772,6 +772,8 @@ class SearchService:
 
         if self.debug:
             print(f"RSM tipo detectado: HTML | {url}")
+        if response.encoding is None or response.encoding.lower() == "iso-8859-1":
+            response.encoding = response.apparent_encoding
         soup = BeautifulSoup(response.text, "html.parser")
         for element in soup(["nav", "header", "footer", "aside", "script", "style", "noscript"]):
             element.decompose()
@@ -858,6 +860,8 @@ class SearchService:
         if "pdf" in content_type or lowered_url.endswith(".pdf"):
             return self._extract_pdf_text(response.content, url), "pdf", None
 
+        if response.encoding is None or response.encoding.lower() == "iso-8859-1":
+            response.encoding = response.apparent_encoding
         soup = BeautifulSoup(response.text, "html.parser")
         for element in soup(["nav", "header", "footer", "aside", "script", "style", "noscript"]):
             element.decompose()
@@ -908,10 +912,10 @@ class SearchService:
         lowered = (url or "").lower()
         if not lowered:
             return True
-        if "#" in lowered:
-            return True
         if self._looks_like_document_url(lowered):
             return False
+        if "#" in lowered:
+            return True
 
         parsed = urlparse(lowered)
         path = parsed.path or ""

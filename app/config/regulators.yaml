@@ -249,7 +249,7 @@
     requires_playwright: true
 
     selectors:
-      result_container: "main a[href*='/resources/press-releases-factsheets-and-speeches/'], main a[href*='/regulations-and-licences/'], main a[href*='/regulations-and-licensing-listing/'], main a[href*='/-/media/']"
+      result_container: "a[href*='/resources/press-releases-factsheets-and-speeches/'], a[href*='/regulations-and-licences/'], a[href*='/regulations-and-licensing-listing/'], a[href*='/-/media/']"
       result_link: "__self__"
       result_title: "__self__"
       result_summary: null
@@ -841,7 +841,7 @@
   - short_name: ofcom
     name: "Ofcom - Oficina de Comunicaciones (Reino Unido)"
     country: "Reino Unido"
-    region: "RegiÃ³n 1"
+    region: "Región 1"
     language: "en"
     url_base: "https://www.ofcom.org.uk/"
     url_news: "https://www.ofcom.org.uk/news-and-updates"

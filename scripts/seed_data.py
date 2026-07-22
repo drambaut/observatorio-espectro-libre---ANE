@@ -10,6 +10,7 @@ sys.path.append(str(ROOT_DIR))
 from app.db.session import SessionLocal, engine
 from app.models.keyword import Keyword
 from app.models.regulator import Regulator
+from app.models.topic import Topic
 
 CONFIG_DIR = ROOT_DIR / "app" / "config"
 
@@ -117,10 +118,50 @@ def seed_keywords(session) -> int:
     return count
 
 
+def seed_mechanisms(session) -> int:
+    data = load_yaml(CONFIG_DIR / "mechanisms.yaml")
+    count = 0
+
+    for dimension_item in data.get("dimensions", []):
+        dimension_name = dimension_item["name"]
+        dimension = session.scalar(select(Topic).where(Topic.name == dimension_name))
+        dimension_values = {
+            "name": dimension_name,
+            "name_en": dimension_item.get("name_en"),
+            "description": dimension_item.get("description"),
+        }
+        if dimension is None:
+            dimension = Topic(**dimension_values)
+            session.add(dimension)
+            session.flush()
+        else:
+            for field, value in dimension_values.items():
+                setattr(dimension, field, value)
+        count += 1
+
+        for value_item in dimension_item.get("values", []):
+            value_name = value_item["name"]
+            topic = session.scalar(select(Topic).where(Topic.name == value_name))
+            topic_values = {
+                "name": value_name,
+                "name_en": value_item.get("name_en"),
+                "parent_id": dimension.id,
+            }
+            if topic is None:
+                session.add(Topic(**topic_values))
+            else:
+                for field, value in topic_values.items():
+                    setattr(topic, field, value)
+            count += 1
+
+    return count
+
+
 def main() -> None:
     with SessionLocal() as session:
         regulators_summary = seed_regulators(session)
         keywords_count = seed_keywords(session)
+        mechanisms_count = seed_mechanisms(session)
         session.commit()
 
     print(f"Reguladores encontrados en YAML: {regulators_summary['yaml_count']}")
@@ -134,6 +175,7 @@ def main() -> None:
     print(f"Total activos finales en base de datos: {len(regulators_summary['active_short_names'])}")
     print("Activos finales:", ", ".join(regulators_summary["active_short_names"]))
     print(f"Keywords cargadas/actualizadas: {keywords_count}")
+    print(f"Topics de mecanismos flexibles cargados/actualizados: {mechanisms_count}")
 
 
 if __name__ == "__main__":

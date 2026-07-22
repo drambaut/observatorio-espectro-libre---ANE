@@ -47,6 +47,8 @@ class GenericUrlScraper:
     ) -> list[SearchResult]:
         response = self.session.get(search_url, timeout=self.timeout_seconds)
         response.raise_for_status()
+        if response.encoding is None or response.encoding.lower() == "iso-8859-1":
+            response.encoding = response.apparent_encoding
 
         soup = BeautifulSoup(response.text, "html.parser")
         base_url = url_base or self._origin_from_url(search_url)

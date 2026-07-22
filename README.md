@@ -72,7 +72,13 @@ python scripts/seed_data.py
 python scripts/check_db.py
 ```
 
-`seed_data.py` sincroniza reguladores y keywords desde YAML. Si un regulador ya no esta en el YAML, se desactiva en la base sin borrarlo.
+`seed_data.py` sincroniza reguladores, keywords y dimensiones de mecanismos flexibles desde YAML. Si un regulador ya no esta en el YAML, se desactiva en la base sin borrarlo.
+
+Para etiquetar documentos existentes con las dimensiones de mecanismos flexibles (heuristico, ver `app/config/mechanisms.yaml`):
+
+```bash
+python scripts/tag_documents_by_mechanism.py
+```
 
 ## Dashboard
 
@@ -96,6 +102,7 @@ El dashboard muestra:
 - total por regulador, incluyendo activos con 0 resultados
 - total por keyword
 - tabla de documentos encontrados
+- filtros por regulador, keyword, status, fecha y dimensiones de mecanismos flexibles (requiere haber corrido `tag_documents_by_mechanism.py`)
 
 ## Ejecutar scraping
 
@@ -128,6 +135,7 @@ python scripts/run_daily_search.py --regulators arcep --debug --skip-audit
 - Reguladores: `app/config/regulators.yaml`
 - Keywords: `app/config/keywords.yaml`
 - Terminos relacionados para auditoria: `app/config/related_terms.yaml`
+- Dimensiones de mecanismos flexibles: `app/config/mechanisms.yaml`
 
 Para agregar un regulador, crear una entrada YAML y ejecutar:
 

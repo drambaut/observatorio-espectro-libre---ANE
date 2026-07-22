@@ -131,7 +131,8 @@ class PlaywrightUrlScraper:
                     if remaining_ms > 0:
                         page.wait_for_timeout(min(1500, remaining_ms))
 
-                if self._page_has_no_results(page):
+                is_listing = filters.get("search_method") == "listing"
+                if not is_listing and self._page_has_no_results(page):
                     if self.debug:
                         print("Playwright pagina indica No results found; se omite keyword")
                     return []

@@ -67,6 +67,33 @@ Luego normaliza el contenido y verifica que aparezcan las palabras principales d
 
 Si la keyword es compuesta, como `unlicensed spectrum`, deben aparecer los terminos principales.
 
+## Mecanismos flexibles (dimensiones de analisis)
+
+Se definieron 3 dimensiones para clasificar documentos segun el tipo de mecanismo de
+gestion del espectro que discuten, en `app/config/mechanisms.yaml`:
+
+- **Mecanismo de asignacion**: Subasta / PSO / Autorizacion general
+- **Tipo de derecho de uso**: Derecho exclusivo / No requiere permiso individual
+- **Modelo de pago**: Precio de mercado / Depende de la poblacion cubierta / No existe pago por uso
+
+Estas dimensiones se derivaron de una tabla de referencia (servicios Movil /
+Radiodifusion / Uso libre) compartida para el micrositio, a pedido de agregar filtros
+por "variables de analisis o dimensiones de los mecanismos flexibles" al observatorio.
+
+`scripts/seed_data.py` sincroniza este YAML contra la tabla `topics` (cada dimension es
+un `Topic` padre, cada valor un `Topic` hijo). `scripts/tag_documents_by_mechanism.py`
+etiqueta documentos existentes de forma heuristica (coincidencia de texto) creando
+registros en `document_topics`.
+
+**Limitacion conocida:** el corpus scrapeado hoy solo cubre documentos sobre "unlicensed
+spectrum" / "license-exempt", es decir, el extremo de "uso libre" de la tabla original.
+En la practica, casi todos los documentos quedan etiquetados unicamente como "No requiere
+permiso individual"; valores como "Subasta", "PSO" o "Derecho exclusivo" no suelen tener
+coincidencias reales todavia. Antes de asumir que estos filtros son analiticamente
+utiles para el corpus actual, validar con quien pidio los filtros si la intencion era
+clasificar el corpus scrapeado (import internacional) o comparar contra el marco
+colombiano de la tabla original (que es un dato de referencia distinto, no scrapeado).
+
 ## Dashboard
 
 El dashboard en `scripts/dashboard.py` permite ver:
@@ -76,6 +103,7 @@ El dashboard en `scripts/dashboard.py` permite ver:
 - total por regulador
 - total por keyword
 - tabla de documentos
+- filtros por regulador, keyword, status, fecha y dimensiones de mecanismos flexibles
 
 La tabla "Total por regulador" parte desde reguladores activos y hace un merge contra resultados filtrados, por lo que muestra reguladores con total 0.
 

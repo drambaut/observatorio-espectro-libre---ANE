@@ -9,8 +9,9 @@ ROOT_DIR = Path(__file__).resolve().parents[1]
 sys.path.append(str(ROOT_DIR))
 
 from app.db.session import SessionLocal
-from app.models.document import Document
+from app.models.document import Document, DocumentTopic
 from app.models.regulator import Regulator
+from app.models.topic import Topic
 
 
 @st.cache_data(ttl=60)
@@ -34,6 +35,7 @@ def load_active_regulators() -> pd.DataFrame:
 def load_documents() -> pd.DataFrame:
     statement = (
         select(
+            Document.id.label("document_id"),
             Regulator.short_name.label("regulator"),
             Regulator.country.label("country"),
             Document.title.label("title"),
@@ -51,6 +53,7 @@ def load_documents() -> pd.DataFrame:
         rows = session.execute(statement).mappings().all()
 
     columns = [
+        "document_id",
         "regulator",
         "country",
         "title",
@@ -62,13 +65,36 @@ def load_documents() -> pd.DataFrame:
     return pd.DataFrame(rows, columns=columns)
 
 
+@st.cache_data(ttl=60)
+def load_document_mechanisms() -> pd.DataFrame:
+    dimension = Topic.__table__.alias("dimension")
+    statement = (
+        select(
+            DocumentTopic.document_id.label("document_id"),
+            dimension.c.name.label("dimension"),
+            Topic.name.label("mechanism"),
+        )
+        .join(Topic, DocumentTopic.topic_id == Topic.id)
+        .join(dimension, Topic.parent_id == dimension.c.id)
+    )
+
+    with SessionLocal() as session:
+        rows = session.execute(statement).mappings().all()
+
+    return pd.DataFrame(rows, columns=["document_id", "dimension", "mechanism"])
+
+
 def unique_options(df: pd.DataFrame, column: str) -> list[str]:
     if df.empty or column not in df:
         return []
     return sorted(value for value in df[column].dropna().unique().tolist() if value)
 
 
-def apply_filters(df: pd.DataFrame, active_regulators: pd.DataFrame) -> tuple[pd.DataFrame, list[str]]:
+def apply_filters(
+    df: pd.DataFrame,
+    active_regulators: pd.DataFrame,
+    document_mechanisms: pd.DataFrame,
+) -> tuple[pd.DataFrame, list[str]]:
     filtered = df.copy()
 
     with st.sidebar:
@@ -92,6 +118,19 @@ def apply_filters(df: pd.DataFrame, active_regulators: pd.DataFrame) -> tuple[pd
                 max_value=max_date,
             )
 
+        st.subheader("Mecanismos flexibles")
+        mechanism_selections: dict[str, list[str]] = {}
+        if document_mechanisms.empty:
+            st.caption("Sin documentos etiquetados todavia. Corre scripts/tag_documents_by_mechanism.py.")
+        else:
+            for dimension in sorted(document_mechanisms["dimension"].dropna().unique()):
+                options = sorted(
+                    document_mechanisms.loc[
+                        document_mechanisms["dimension"] == dimension, "mechanism"
+                    ].unique()
+                )
+                mechanism_selections[dimension] = st.multiselect(dimension, options)
+
     if regulators:
         filtered = filtered[filtered["regulator"].isin(regulators)]
     if keywords:
@@ -102,6 +141,16 @@ def apply_filters(df: pd.DataFrame, active_regulators: pd.DataFrame) -> tuple[pd
         start_date, end_date = date_range
         extraction_dates = pd.to_datetime(filtered["extraction_date"]).dt.date
         filtered = filtered[(extraction_dates >= start_date) & (extraction_dates <= end_date)]
+
+    for dimension, selected_mechanisms in mechanism_selections.items():
+        if not selected_mechanisms:
+            continue
+        matching_ids = document_mechanisms.loc[
+            (document_mechanisms["dimension"] == dimension)
+            & (document_mechanisms["mechanism"].isin(selected_mechanisms)),
+            "document_id",
+        ].unique()
+        filtered = filtered[filtered["document_id"].isin(matching_ids)]
 
     return filtered, regulators
 
@@ -160,6 +209,15 @@ def show_documents_table(df: pd.DataFrame) -> None:
         display_df,
         hide_index=True,
         use_container_width=True,
+        column_order=[
+            "regulator",
+            "country",
+            "title",
+            "url",
+            "keyword_matched",
+            "extraction_date",
+            "status",
+        ],
         column_config={
             "regulator": "Regulador",
             "country": "Pais",
@@ -178,7 +236,10 @@ def main() -> None:
 
     documents = load_documents()
     active_regulators = load_active_regulators()
-    filtered_documents, selected_regulators = apply_filters(documents, active_regulators)
+    document_mechanisms = load_document_mechanisms()
+    filtered_documents, selected_regulators = apply_filters(
+        documents, active_regulators, document_mechanisms
+    )
 
     show_metrics(filtered_documents)
     show_group_totals(filtered_documents, active_regulators, selected_regulators)

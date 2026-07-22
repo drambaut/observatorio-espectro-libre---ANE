@@ -1,0 +1,92 @@
+# Dimensiones de analisis de "mecanismos flexibles" de gestion del espectro.
+#
+# Derivadas directamente de la tabla de servicios (Movil / Radiodifusion / Uso libre)
+# usada como referencia para el micrositio. Cada dimension corresponde a una fila de
+# esa tabla; cada valor es lo que puede tomar un servicio en esa fila.
+#
+# `terms` es una lista de frases (en ingles y espanol) usada por
+# scripts/tag_documents_by_mechanism.py para etiquetar documentos ya scrapeados de forma
+# heuristica. La mayoria de los documentos scrapeados hoy solo mencionan el extremo de
+# "uso libre" (unlicensed / license-exempt), asi que valores como "Subasta" o "PSO"
+# rara vez van a tener coincidencias reales en el corpus actual. Ver docs/CONTEXTO_PROYECTO.md.
+
+dimensions:
+  - name: "Mecanismo de asignacion"
+    name_en: "Assignment mechanism"
+    description: "Como se otorga el derecho de uso del espectro para el servicio."
+    values:
+      - name: "Subasta"
+        name_en: "Auction"
+        terms:
+          - "auction"
+          - "competitive bidding"
+          - "subasta"
+
+      - name: "PSO"
+        name_en: "PSO"
+        terms:
+          - "pso"
+
+      - name: "Autorizacion general"
+        name_en: "General authorization"
+        terms:
+          - "general authorization"
+          - "general authorisation"
+          - "class licence"
+          - "class license"
+          - "autorizacion general"
+
+  - name: "Tipo de derecho de uso"
+    name_en: "Type of usage right"
+    description: "Si el uso del espectro es exclusivo (requiere permiso individual) o de uso libre."
+    values:
+      - name: "Derecho exclusivo"
+        name_en: "Exclusive right"
+        terms:
+          - "exclusive right"
+          - "exclusive use"
+          - "exclusive license"
+          - "exclusive licence"
+          - "individual license required"
+          - "individual licence required"
+          - "derecho exclusivo"
+
+      - name: "No requiere permiso individual"
+        name_en: "No individual permit required"
+        terms:
+          - "unlicensed"
+          - "unlicensed spectrum"
+          - "license-exempt"
+          - "licence-exempt"
+          - "no individual license"
+          - "no individual licence"
+          - "general user licence"
+          - "general user licences"
+          - "no requiere permiso individual"
+
+  - name: "Modelo de pago"
+    name_en: "Payment model"
+    description: "Como se cobra por el uso del espectro asignado."
+    values:
+      - name: "Precio de mercado"
+        name_en: "Market price"
+        terms:
+          - "market price"
+          - "spectrum fee"
+          - "auction proceeds"
+          - "precio de mercado"
+
+      - name: "Depende de la poblacion cubierta"
+        name_en: "Population-based fee"
+        terms:
+          - "population-based fee"
+          - "coverage-based fee"
+          - "poblacion cubierta"
+
+      - name: "No existe pago por uso"
+        name_en: "No usage fee"
+        terms:
+          - "fee-free"
+          - "royalty-free"
+          - "no usage fee"
+          - "no existe pago por uso"
