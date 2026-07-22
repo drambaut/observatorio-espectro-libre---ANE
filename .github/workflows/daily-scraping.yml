@@ -55,5 +55,6 @@ jobs:
             echo "Sin cambios nuevos, no se crea commit."
           else
             git commit -m "Scraping automatico $(date -u +%Y-%m-%d)"
-            git push
+            git pull --rebase origin main
+            git push origin main
           fi
