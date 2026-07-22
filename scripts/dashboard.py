@@ -3,6 +3,7 @@ import sys
 
 import pandas as pd
 import streamlit as st
+import yaml
 from sqlalchemy import select
 
 ROOT_DIR = Path(__file__).resolve().parents[1]
@@ -12,6 +13,8 @@ from app.db.session import SessionLocal
 from app.models.document import Document, DocumentTopic
 from app.models.regulator import Regulator
 from app.models.topic import Topic
+
+MECHANISMS_CONFIG_PATH = ROOT_DIR / "app" / "config" / "mechanisms.yaml"
 
 
 @st.cache_data(ttl=60)
@@ -84,6 +87,18 @@ def load_document_mechanisms() -> pd.DataFrame:
     return pd.DataFrame(rows, columns=["document_id", "dimension", "mechanism"])
 
 
+@st.cache_data(ttl=60)
+def load_mechanism_taxonomy() -> dict[str, list[str]]:
+    with MECHANISMS_CONFIG_PATH.open("r", encoding="utf-8") as file:
+        data = yaml.safe_load(file) or {}
+
+    taxonomy: dict[str, list[str]] = {}
+    for dimension_item in data.get("dimensions", []):
+        values = [value_item["name"] for value_item in dimension_item.get("values", [])]
+        taxonomy[dimension_item["name"]] = values
+    return taxonomy
+
+
 def unique_options(df: pd.DataFrame, column: str) -> list[str]:
     if df.empty or column not in df:
         return []
@@ -94,6 +109,7 @@ def apply_filters(
     df: pd.DataFrame,
     active_regulators: pd.DataFrame,
     document_mechanisms: pd.DataFrame,
+    mechanism_taxonomy: dict[str, list[str]],
 ) -> tuple[pd.DataFrame, list[str]]:
     filtered = df.copy()
 
@@ -119,17 +135,14 @@ def apply_filters(
             )
 
         st.subheader("Mecanismos flexibles")
+        st.caption(
+            "Como se regula el uso del espectro en cada documento: quien lo asigna, "
+            "si el derecho es exclusivo o de uso libre, y como se paga por usarlo. "
+            "Si eliges una opcion sin documentos todavia, la tabla de abajo queda vacia."
+        )
         mechanism_selections: dict[str, list[str]] = {}
-        if document_mechanisms.empty:
-            st.caption("Sin documentos etiquetados todavia. Corre scripts/tag_documents_by_mechanism.py.")
-        else:
-            for dimension in sorted(document_mechanisms["dimension"].dropna().unique()):
-                options = sorted(
-                    document_mechanisms.loc[
-                        document_mechanisms["dimension"] == dimension, "mechanism"
-                    ].unique()
-                )
-                mechanism_selections[dimension] = st.multiselect(dimension, options)
+        for dimension, options in mechanism_taxonomy.items():
+            mechanism_selections[dimension] = st.multiselect(dimension, options)
 
     if regulators:
         filtered = filtered[filtered["regulator"].isin(regulators)]
@@ -237,8 +250,9 @@ def main() -> None:
     documents = load_documents()
     active_regulators = load_active_regulators()
     document_mechanisms = load_document_mechanisms()
+    mechanism_taxonomy = load_mechanism_taxonomy()
     filtered_documents, selected_regulators = apply_filters(
-        documents, active_regulators, document_mechanisms
+        documents, active_regulators, document_mechanisms, mechanism_taxonomy
     )
 
     show_metrics(filtered_documents)
