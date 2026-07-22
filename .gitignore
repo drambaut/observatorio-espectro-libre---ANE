@@ -24,6 +24,7 @@ debug_*.json
 *.sqlite
 *.sqlite3
 !data/demo_observatorio.db
+!data/observatorio_produccion.db
 
 data/audit_report.csv
 data/blocked_sites_log.csv

@@ -1,0 +1,59 @@
+name: Scraping diario del Observatorio ANE
+
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch: {}
+
+concurrency:
+  group: daily-scraping
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+env:
+  DATABASE_PATH: data/observatorio_produccion.db
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar dependencias
+        run: python -m pip install -r requirements.txt
+
+      - name: Instalar navegadores de Playwright
+        run: python -m playwright install --with-deps chromium
+
+      - name: Instalar Google Chrome (requerido por el scraper de FCC)
+        uses: browser-actions/setup-chrome@v1
+        with:
+          chrome-version: stable
+
+      - name: Inicializar y sincronizar base de datos
+        run: |
+          python scripts/init_db.py
+          python scripts/seed_data.py
+
+      - name: Correr scraping diario
+        run: python scripts/run_daily_search.py --all --timeout-seconds 90 --skip-audit
+
+      - name: Guardar resultados nuevos
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add data/observatorio_produccion.db
+          if git diff --cached --quiet; then
+            echo "Sin cambios nuevos, no se crea commit."
+          else
+            git commit -m "Scraping automatico $(date -u +%Y-%m-%d)"
+            git push
+          fi
